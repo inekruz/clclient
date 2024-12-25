@@ -19,14 +19,10 @@ function Control() {
       </div>
 
       <div className={`control_content_client ${clientPage ? '' : 'hidden'}`}>
-        <h4>Добавить клиента</h4>
-        
         <AddClient />
       </div>
 
       <div className={`control_content_country ${clientPage ? 'hidden' : ''}`}>
-        <h4>Добавить страну</h4>
-
         <AddCountry />
       </div>
     </div>

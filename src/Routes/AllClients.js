@@ -69,7 +69,7 @@ function AllClients() {
    };
 
    return (
-      <div>
+      <div className='list_container'>
          <h3>Список клиентов</h3>
 
          <ul className='list'>
