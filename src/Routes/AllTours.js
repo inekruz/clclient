@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import './Routes.css';
-import EditClient from './Components/EditClient';
+import EditTour from './Components/EditTour'; // Добавить Обновление тура
 import Trash from './RoutesIcons/trash.svg';
 
 function AllTours() {
-   const [clients, setClients] = useState([]);
+   const [tours, setTours] = useState([]);
    const [error, setError] = useState('');
    const [showError, setShowError] = useState(false);
    const [modal, setModal] = useState(false);
-   const [selectedClient, setSelectedClient] = useState([]);
+   const [selectedTour, setSelectedTour] = useState(null);
 
    useEffect(() => {
-      const fetchClients = async () => {
+      const fetchTours = async () => {
          try {
-            const response = await fetch('https://api.glimshop.ru/getclients', {
+            const response = await fetch('https://api.glimshop.ru/gettours', {
                method: 'GET',
                headers: {
                   'Content-Type': 'application/json',
@@ -21,11 +21,11 @@ function AllTours() {
             });
             
             if (!response.ok) {
-               alert('Ошибка при отправке запроса');
+               throw new Error('Ошибка при получении туров');
             }
 
             const data = await response.json();
-            setClients(data);
+            setTours(data);
          } catch (error) {
             console.error('Ошибка:', error);
             setError(error.message);
@@ -33,11 +33,11 @@ function AllTours() {
          }
       };
 
-      fetchClients();
+      fetchTours();
    }, []);
 
-   const clientHandleDelete = async (id) => {
-      const message = `Удалить пользователя с id ${id}?`;
+   const handleDelete = async (id) => {
+      const message = `Удалить тур с id ${id}?`;
       const confirm = window.confirm(message);
       
       if (!confirm) {
@@ -45,7 +45,7 @@ function AllTours() {
       }
       
       try {
-         const response = await fetch('https://api.glimshop.ru/delclients_id', {
+         const response = await fetch(`https://api.glimshop.ru/deltour_id`, {
             method: 'DELETE',
             headers: {
                'Content-Type': 'application/json',
@@ -54,17 +54,17 @@ function AllTours() {
          });
          
          if (!response.ok) {
-            alert('Ошибка при отправке запроса');
+            throw new Error('Ошибка при удалении тура');
          } else {
-            setClients(clients.filter(client => client.client_id !== id));
+            setTours(tours.filter(tour => tour.tour_id !== id));
          }
       } catch (error) {
          console.error('Ошибка:', error);
       }
    };
 
-   const handleEditClick = (client) => {
-      setSelectedClient(client);
+   const handleEditClick = (tour) => {
+      setSelectedTour(tour);
       setModal(true);
    };
 
@@ -73,18 +73,17 @@ function AllTours() {
          <h3>Список туров</h3>
 
          <ul className='list'>
-            {clients.map(client => (
-               <li key={client.client_id} className='list_item'>
-                  <p>{client.client_id}</p>
-                  <p className='list_item_name'>{client.last_name} {client.first_name}</p>
-                  <p>{client.email}</p>
-                  <p>{client.phone}</p>
-                  <p>{client.birth_date}</p>
-                  <p>{client.created_at}</p>
-                  <p>{client.update_at}</p>
+            {tours.map(tour => (
+               <li key={tour.tour_id} className='list_item'>
+                  <p>{tour.tour_id}</p>
+                  <p className='list_item_name'>{tour.tour_name}</p>
+                  <p>{tour.price}</p>
+                  <p>{tour.duration} дней</p>
+                  <p>{tour.start_date}</p>
+                  <p>{tour.end_date}</p>
                   <div className='list_item_footer'>
-                     <button className='list_button' onClick={() => handleEditClick(client)}>Изменить</button>
-                     <img src={Trash} alt='Корзина' onClick={() => clientHandleDelete(client.client_id)} />
+                     <button className='list_button' onClick={() => handleEditClick(tour)}>Изменить</button>
+                     <img src={Trash} alt='Корзина' onClick={() => handleDelete(tour.tour_id)} />
                   </div>
                </li>
             ))}
@@ -92,10 +91,11 @@ function AllTours() {
 
          {showError && <p className='error_message'>{error}</p>}
 
-         <EditClient
+         <EditTour
             modal={modal}
             setModal={setModal}
-            selectedClient={selectedClient}
+            selectedTour={selectedTour}
+            setTours={setTours}
          />
       </div>
    );

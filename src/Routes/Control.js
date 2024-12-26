@@ -3,7 +3,7 @@ import './Routes.css';
 
 import AddClient from './Components/AddClient';
 import AddCountry from './Components/AddCountry';
-import AddTour from './AddTour';
+import AddTour from './Components/AddTour';
 
 function Control() {
   const [clientPage, setClientPage] = useState('');
