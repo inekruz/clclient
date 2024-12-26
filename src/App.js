@@ -6,6 +6,7 @@ import { Link, Route, Routes, useLocation } from 'react-router-dom';
 import AllClients from './Routes/AllClients';
 import Control from './Routes/Control';
 import Countries from './Routes/Countries';
+import AllTours from './Routes/AllTours';
 
 function App() {
 
@@ -21,6 +22,9 @@ function App() {
             <Link to='/countries'>
               <li className={`header_nav_item ${location.pathname === '/countries' ? 'active' : ''}`}>Все страны</li>
             </Link>
+            <Link to='/tours'>
+              <li className={`header_nav_item ${location.pathname === '/tours' ? 'active' : ''}`}>Туры</li>
+            </Link>
             <Link to='/control'>
               <li className={`header_nav_item ${location.pathname === '/control' ? 'active' : ''}`}>Управление</li>
             </Link>
@@ -31,6 +35,7 @@ function App() {
           <Routes>
             <Route path='/' element={<AllClients />} />
             <Route path='/control' element={<Control />} />
+            <Route path='/tours' element={<AllTours />} />
             <Route path='/countries' element={<Countries />} />
           </Routes>
         </div>

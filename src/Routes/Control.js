@@ -3,9 +3,23 @@ import './Routes.css';
 
 import AddClient from './Components/AddClient';
 import AddCountry from './Components/AddCountry';
+import AddTour from './AddTour';
 
 function Control() {
-  const [clientPage, setIsClientPage] = useState(true);
+  const [clientPage, setClientPage] = useState('');
+
+  const selectedPage = () => {
+    switch (clientPage) {
+      case 'AddClient':
+        return <AddClient />;
+      case 'AddCountry':
+        return <AddCountry />;
+      case 'AddTour':
+        return <AddTour />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className='control'>
@@ -13,17 +27,14 @@ function Control() {
 
       <div className='control_nav_container'>
         <ul className='control_nav'>
-          <li className={`header_nav_item ${clientPage ? 'active' : ''}`} onClick={() => setIsClientPage(true)}>Добавить клиента</li>
-          <li className={`header_nav_item ${clientPage ? '' : 'active'}`} onClick={() => setIsClientPage(false)}>Добавить страну</li>
+          <li className={`header_nav_item ${clientPage === 'AddClient' ? 'active' : ''}`} onClick={() => setClientPage('AddClient')}>Добавить клиента</li>
+          <li className={`header_nav_item ${clientPage === 'AddCountry' ? 'active' : ''}`} onClick={() => setClientPage('AddCountry')}>Добавить страну</li>
+          <li className={`header_nav_item ${clientPage === 'AddTour' ? 'active' : ''}`} onClick={() => setClientPage('AddTour')}>Добавить тур</li>
         </ul>
       </div>
 
-      <div className={`control_content_client ${clientPage ? '' : 'hidden'}`}>
-        <AddClient />
-      </div>
-
-      <div className={`control_content_country ${clientPage ? 'hidden' : ''}`}>
-        <AddCountry />
+      <div className='control_content'>
+        {selectedPage()}
       </div>
     </div>
   );
