@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Routes.css';
-import EditTour from './Components/EditTour'; // Добавить Обновление тура
+// import EditTour from './Components/EditTour'; // Добавить Обновление тура
 import Trash from './RoutesIcons/trash.svg';
 
 function AllTours() {
@@ -91,12 +91,7 @@ function AllTours() {
 
          {showError && <p className='error_message'>{error}</p>}
 
-         <EditTour
-            modal={modal}
-            setModal={setModal}
-            selectedTour={selectedTour}
-            setTours={setTours}
-         />
+
       </div>
    );
 }

@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import './Routes.css';
+import '../Routes.css';
+
+import Cross from '../RoutesIcons/white_cross.svg';
 
 function AddTour() {
   const [tourName, setTourName] = useState('');
@@ -8,7 +10,7 @@ function AddTour() {
   const [duration, setDuration] = useState('');
   const [startDate, setStartDate] = useState('');
   const [endDate, setEndDate] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
+  const [goodMessage, setGoodMessage] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,9 +34,8 @@ function AddTour() {
       if (!response.ok) {
         throw new Error('Ошибка при добавлении тура');
       }
+      setGoodMessage(true);
 
-      const data = await response.json();
-      setSuccessMessage('Тур успешно добавлен!');
       setTourName('');
       setCountryId('');
       setPrice('');
@@ -127,7 +128,14 @@ function AddTour() {
         <button type='submit' className='list_button'>Добавить</button>
       </form>
 
-      {successMessage && <p className='success_message'>{successMessage}</p>}
+      <div className={`good_message ${goodMessage ? 'active' : ''}`}>
+        <div className='good_message_header'>
+          <img src={Cross} alt='Крестик' className='white_cross' onClick={() => setGoodMessage(false)} />
+        </div>
+        <div className='good_message_content'>
+          <p>Успешно</p>
+        </div>
+      </div>
     </div>
   );
 }
