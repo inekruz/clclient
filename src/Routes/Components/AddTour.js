@@ -20,7 +20,7 @@ function AddTour() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-        },
+        }, 
         body: JSON.stringify({
           tour_name: tourName,
           country_id: countryId,

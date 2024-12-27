@@ -34,6 +34,7 @@ function EditCountry({ modal, setModal, country }) {
             alert('Ошибка при отправке запроса');
          } else {
             setModal(false);
+            window.location.reload();
          }
       } catch (error) {
          console.error('Ошибка:', error);

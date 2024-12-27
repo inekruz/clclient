@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import './Routes.css';
-// import EditTour from './Components/EditTour'; // Добавить Обновление тура
+import EditTour from './Components/EditTour'; // Добавить Обновление тура
 import Trash from './RoutesIcons/trash.svg';
 
 function AllTours() {
@@ -78,9 +78,9 @@ function AllTours() {
                   <p>{tour.tour_id}</p>
                   <p className='list_item_name'>{tour.tour_name}</p>
                   <p>{tour.price}</p>
-                  <p>{tour.duration} дней</p>
-                  <p>{tour.start_date}</p>
-                  <p>{tour.end_date}</p>
+                  <p>Начало: {tour.start_date}</p>
+                  <p>Конец: {tour.end_date}</p>
+                  <p>{tour.description}</p>
                   <div className='list_item_footer'>
                      <button className='list_button' onClick={() => handleEditClick(tour)}>Изменить</button>
                      <img src={Trash} alt='Корзина' onClick={() => handleDelete(tour.tour_id)} />
@@ -90,8 +90,12 @@ function AllTours() {
          </ul>
 
          {showError && <p className='error_message'>{error}</p>}
-
-
+   
+         <EditTour
+            modal={modal}
+            setModal={setModal}
+            selectedTour={selectedTour}
+         />
       </div>
    );
 }
